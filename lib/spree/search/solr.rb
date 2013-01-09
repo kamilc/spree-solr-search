@@ -23,7 +23,7 @@ module Spree::Search
       result = Product.find_by_solr(full_query, search_options)
 
       count = result.records.size
-      products = result.records.paginate(:page => page, :per_page => per_page, :total_entries => count)
+      products = Kaminari.paginate_array(result.records).page(page).per(per_page)
 
       @properties[:products] = products
       @properties[:suggest] = nil
